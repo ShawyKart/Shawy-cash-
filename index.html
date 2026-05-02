@@ -880,7 +880,7 @@ let filePath = "avatars/" + user.id + "_" + Date.now() + ".png";
 
   await supabaseClient
     .from("users")
-    .update({ avatar_url: imageUrl })
+.update({ avatar_url: data.publicUrl }) 
     .eq("id", user.id);
 
   alert("✅ تم رفع الصورة");
