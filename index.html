@@ -861,8 +861,7 @@ async function uploadProfileImage(){
   const user = getUser();
   if(!user.id) return;
 
-  let filePath = "avatars/" + user.id + ".png";
-
+let filePath = "avatars/" + user.id + "_" + Date.now() + ".png";
   let { error: uploadError } = await supabaseClient.storage
     .from('avatars')
     .upload(filePath, file, { upsert: true });
