@@ -875,6 +875,7 @@ let filePath = "avatars/" + user.id + "_" + Date.now() + ".png";
     .getPublicUrl(filePath);
 
   let imageUrl = data.publicUrl + "?t=" + new Date().getTime();
+  alert(imageUrl);
 
   document.getElementById('profileImage').src = imageUrl;
 
