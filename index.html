@@ -909,7 +909,7 @@ async function loadProfile(){
     document.getElementById('profileNameInput').value = data.name || "";
     document.getElementById('profileNameDisplay').innerText = data.name || "";
     if(data.avatar_url){
-  document.getElementById('profileImage').src = data.avatar_url;
+  document.getElementById('profileImage').src = data.avatar_url + "?t=" + new Date().getTime();
     }
   }
 }
