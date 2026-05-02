@@ -743,14 +743,21 @@ async function register(){
     if(error) throw error;
     
     const code = Math.floor(1000 + Math.random() * 9000).toString();
-    
-    await supabaseClient.from("users").insert([{
-      id: data.user.id,
-      email: email,
-      name: email.split('@')[0],
-      code: code,
-      balance: 0
-    }]);
+const { error: insertError } = await supabaseClient
+  .from("users")
+  .insert([{
+    id: data.user.id,
+    email: email,
+    name: email.split('@')[0],
+    code: code,
+    balance: 0
+  }]);
+
+if (insertError) {
+  console.log("INSERT ERROR:", insertError);
+  alert("خطأ في إدخال المستخدم: " + insertError.message);
+  return;
+}
     
     alert("✅ تم إنشاء الحساب بنجاح!");
     document.getElementById("regEmail").value="";
