@@ -888,7 +888,7 @@ let filePath = "avatars/" + user.id + "_" + Date.now() + ".png";
   await supabaseClient
     .from("users")
 .update({ avatar_url: imageUrl }) 
-    .eq("id", user.id);
+.eq("user_id", user.id); 
 
   alert("✅ تم رفع الصورة");
 
@@ -900,7 +900,7 @@ async function saveProfileName(){
   const user = getUser();
   if(!user.id) return;
   
-  await supabaseClient.from("users").update({ name: name }).eq("id", user.id);
+  await supabaseClient.from("users").update({ name: name }).eq("user_id", user.id)
   document.getElementById('profileNameDisplay').innerText = name;
   syncData();
 }
@@ -909,7 +909,7 @@ async function loadProfile(){
   const user = getUser();
   if(!user.id) return;
   
-  const { data } = await supabaseClient.from("users").select("*").eq("id", user.id).single();
+  const { data } = await supabaseClient.from("users").select("*").eq("user_id", user.id).single();
   
   if(data){
     document.getElementById('profileNameInput').value = data.name || "";
@@ -935,7 +935,7 @@ async function updateBalance(){
   if(!user.id) return;
   
   try {
-    const { data } = await supabaseClient.from("users").select("balance").eq("id", user.id).single();
+    const { data } = await supabaseClient.from("users").select("balance").eq("user_id", user.id).single();
     
     if(data){
       document.getElementById("balanceText").innerText = "الرصيد: $" + (data.balance || 0).toFixed(2);
@@ -954,7 +954,7 @@ async function getBalance(){
   if(!user.id) return 0;
   
   try {
-    const { data } = await supabaseClient.from("users").select("balance").eq("id", user.id).single();
+const { data } = await supabaseClient.from("users").select("balance").eq("user_id", user.id).single();
     return data?.balance || 0;
   } catch(error) {
     console.error("خطأ في جلب الرصيد:", error);
@@ -967,7 +967,7 @@ async function setBalance(amount){
   if(!user.id) return;
   
   try {
-    await supabaseClient.from("users").update({ balance: amount }).eq("id", user.id);
+await supabaseClient.from("users").update({ balance: amount }).eq("user_id", user.id);
     updateBalance();
     syncData();
   } catch(error) {
