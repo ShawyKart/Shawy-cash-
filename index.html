@@ -663,6 +663,7 @@ async function initSupabase() {
         }
     loadApps();
     updateBalance();
+    await loadProfile();
     syncData();
   }
 }
