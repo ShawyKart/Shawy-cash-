@@ -877,7 +877,7 @@ async function uploadProfileImage(){
     .from('avatars')
     .getPublicUrl(filePath);
 
-  let imageUrl = data.publicUrl;
+  let imageUrl = data.publicUrl + "?t=" + new Date().getTime();
 
   document.getElementById('profileImage').src = imageUrl;
 
