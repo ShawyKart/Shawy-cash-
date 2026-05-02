@@ -861,6 +861,33 @@ function calculateAppPrice() {
   }
   document.getElementById("appPrice").innerText = price.toFixed(2);
 }
+// 👇 هون تحط الكود
+async function buyApp(){
+  let amount = parseFloat(document.getElementById("appAmount").value) || 0;
+  let app = selectedApp;
+  let price = parseFloat(document.getElementById("appPrice").innerText);
+
+  const user = getUser();
+
+  let balance = await getBalance();
+
+  if(balance < price){
+    alert("رصيدك لا يكفي");
+    return;
+  }
+
+  await setBalance(balance - price);
+
+  await supabaseClient.from("orders").insert([{
+    user_id: user.id,
+    product: app,
+    amount: amount,
+    price: price,
+    status: "pending"
+  }]);
+
+  alert("تم إنشاء الطلب ✅");
+}
 async function uploadProfileImage(){
   let file = document.getElementById('imageUpload').files[0];
   if(!file) return;
