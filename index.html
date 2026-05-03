@@ -890,15 +890,21 @@ async function buyApp(){
 
   const user = getUser();
 
-  await supabaseClient.from("orders").insert([{
-    user_id: user.id,
-    user_email: user.email,
-    app: selectedApp,
-    amount: amount,
-    price: price,
-    game_id: userId,
-    completed: false
-  }]);
+ const { data, error } = await supabaseClient.from("orders").insert([{
+  user_id: user.id,
+  user_email: user.email,
+  app: selectedApp,
+  amount: amount,
+  price: price,
+  game_id: userId,
+  completed: false
+}]);
+
+if (error) {
+  alert("ERROR: " + error.message);
+  console.log(error);
+  return;
+}
 
   alert("✅ تم حفظ الطلب");
 
